@@ -1,23 +1,39 @@
 package com.game.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 
-
+@org.hibernate.annotations.NamedQueries(
+        {@org.hibernate.annotations.NamedQuery(name = "getAllPlayersCount", query = "from Player"),
+                @org.hibernate.annotations.NamedQuery(name = "findById", query = "from Player where id = :id"),
+        })
+@Entity
+@Table(schema = "rpg", name = "player")
 public class Player {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
 
+    @Column(name = "name", length = 12, nullable = false)
     private String name;
 
+    @Column(name = "title", length = 30, nullable = false)
     private String title;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
     private Race race;
-
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
     private Profession profession;
-
+    @Column(nullable = false)
     private Date birthday;
-
+    @Column(nullable = false)
     private Boolean banned;
-
+    @Column(nullable = false)
     private Integer level;
 
     public Player() {
